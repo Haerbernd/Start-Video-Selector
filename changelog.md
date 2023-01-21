@@ -1,5 +1,5 @@
 # Changelog
-## Version 1.1
+## Version 2.0
 * added easier compatibility for linux
 * added installer
 * eased the requirements for starting a video (it's now done via a .json file)
