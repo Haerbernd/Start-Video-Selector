@@ -26,3 +26,19 @@ class TextStyle:
     bold = '\u001b[1m'
     underline = '\u001b[4m'
     reverse = '\u001b[7m'
+
+
+def yesnoquestion(question):
+    answer = input(question + '[y/n]').lower()
+    if answer == 'yes':
+        answer = True
+    elif answer == 'y':
+        answer = True
+    elif answer == 'no':
+        answer = False
+    elif answer == 'n':
+        answer = False
+    else:
+        print('Unknown response. Try yes or no!')
+        yesnoquestion(question)
+    return answer
