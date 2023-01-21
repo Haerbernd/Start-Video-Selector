@@ -1,35 +1,38 @@
 import json
 import os
+import platform
 import sys
 import utils
 
-file = open('config.json', 'r+', encoding='UTF-8')
+file = open('./config.json', 'r+', encoding='UTF-8')
 config = json.load(file)
 file.close()
 
-path = config['path']
+file = open('./db.json', 'r+', encoding='utf-8')
+db = json.load(file)
+file.close()
 
 iD = 0
-iDs = {"id": {"1": ""}}
+iDs = {}
 
-print(utils.Color.red + '0' + utils.Color.reset + ' Exit Program\n---------------')
-for i in os.listdir(path):
-    if i.startswith('vid-'):
-        filepath = path + '\\' + i + '\\meta.json'
-        iD = iD + 1
-        iDs['id'][iD] = i
-        file = open(filepath, 'r+', encoding='UTF-8')
-        meta = json.load(file)
-        print(utils.Color.red + str(iD) + utils.Color.reset + ' ' + meta['videoName'] + "\t" +
-              utils.Color.green + str(meta['tags']).replace("'", '') + utils.Color.reset)
-        file.close()
+print(utils.Color.red + str(iD) + utils.Color.reset + '\t' + 'Quit Program')
+print('----------')
 
-print('\nWhat Video do you want to start? [id]')
+for i in db['video']:
+    iD = iD + 1
+    iDs[iD] = i
+    print(utils.Color.red + str(iD) + utils.Color.reset + '\t' + db['video'][i]['title'] + '\t\t' + utils.Color.green +
+          db['video'][i]['tags'].replace("'", '') + utils.Color.reset)  # Print all Videos in db
 
-video_to_start_id = input('>')
-video_to_start_id = int(video_to_start_id)
-if video_to_start_id == 0:
+user_input = input('\n\nInput Video ID!\n>')
+user_input = int(user_input)
+if user_input == 0:
     sys.exit(0)
 
-video_to_start_path = path + '\\' + iDs['id'][video_to_start_id] + '\\video.mp4'
-os.system(config['vlc-path'] + ' ' + video_to_start_path)
+video_to_start_id = iDs[user_input]
+video_path = db['video'][video_to_start_id]['path']
+if platform.system() == 'windows':
+    vlc = config['VLC-path']
+    os.system(vlc + ' "' + video_path + '"')
+elif platform.system() == 'linux' or 'linux2':
+    os.system('vlc "' + video_path + '"')
