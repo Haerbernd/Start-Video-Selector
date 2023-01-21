@@ -3,7 +3,7 @@ This Program allows you to start a video that was previously assigned an id and 
 
 ## Setup
 The Setup is, especially compared to the former version, very easy.
-All you have to do is to start the `Installer.exe` on Windows or the `Installer.sh` on Linux, and you're basically done.
+All you have to do is to start the `Installer.exe` on Windows or python execute the `Installer.py` on Linux (python3 Installer.py).
 At the end of the Setup however, you will have to install vlc if you don't have it (will be done automatically) and you will have to enter the path to the `vlc.exe` on Windows.
 
 What you should do after the installation is to edit the _db.json_.
