@@ -6,21 +6,26 @@ import sys
 import urllib.request as url
 
 if __name__ == '__main__':
+    print('Start creating necessary files...')
     # Create necessary Files
     file = open('./config.json', 'w', encoding='utf-8')  # Creates the config.json file
     file.write('{"VLC-path": ""}')
     file.close()
 
     file = open('./db.json', 'w', encoding='utf-8')  # Creates the db.json file, in which the video data is saved
-    file.write('{"video": {}}')
+    file.write('{\n"video": {\n"aaa001": {\n"title": "",\n"path": "",\n"tags": []\n}\n}\n}')
     file.close()
+    print('Done...')
 
     # Compile/Create program
     if platform.system() == 'windows':
-        os.system()  # Python compile to .exe
+        print('Start to compile program...')
+        os.system('pyinstaller --noconfirm --onefile --console --icon "favicon.ico" --name "Start Video Selector" '
+                  '--add-data "utils.py;."  ""')  # Python compile to .exe
     elif platform.system() == 'linux' or 'linux2':
+        print('Start to create .sh file')
         file = open('./start-video-selector.sh', 'w', encoding='utf-8')  # Create the start .sh file
-        file.write('python ./start-video-selector.py')
+        file.write('python "' + __file__ + 'start-video-selector.py"')
         file.close()
 
     # VLC
